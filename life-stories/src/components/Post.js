@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CommentPost from "./CommentPost";
 import Delete from "./Delete";
 
 const Post = ({ post, user }) => {
@@ -50,6 +51,7 @@ const Post = ({ post, user }) => {
       ) : (
         <p>{editMess ? editMess : post.message}</p>
       )}
+      <CommentPost post={post} />
     </div>
   );
 };
