@@ -1,4 +1,6 @@
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { db } from "../utils/firebase.config";
 
 const Post = ({ post, user }) => {
   const [edit, setEdit] = useState(false);
@@ -13,6 +15,14 @@ const Post = ({ post, user }) => {
       return "il y a 1 jour";
     } else {
       return "il y a " + days + " jours";
+    }
+  };
+
+  const handleEdit = () => {
+    setEdit(false);
+
+    if (editMess) {
+      updateDoc(doc(db, "posts", post.id), { message: editMess });
     }
   };
 
@@ -39,10 +49,10 @@ const Post = ({ post, user }) => {
         <>
           <textarea
             autoFocus
-            value={editMess ? editMess : post.message}
+            defaultValue={editMess ? editMess : post.message}
             onChange={(e) => setEditMess(e.target.value)}
           ></textarea>
-          <button classname="edit-btn" onClick={() => setEdit(false)}>
+          <button className="edit-btn" onClick={() => handleEdit()}>
             Modifier message
           </button>
         </>
