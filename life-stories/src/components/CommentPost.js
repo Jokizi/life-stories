@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../utils/firebase.config";
-import { updateDoc } from "firebase/firestore";
-import { doc } from "firebase/firestore";
+
 import CommentCard from "./CommentCard";
 
 const CommentPost = ({ post }) => {

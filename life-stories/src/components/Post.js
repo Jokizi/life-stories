@@ -1,4 +1,6 @@
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { db } from "../utils/firebase.config";
 import CommentPost from "./CommentPost";
 import Delete from "./Delete";
 
@@ -17,6 +19,22 @@ const Post = ({ post, user }) => {
       return "il y a " + days + " jours";
     }
   };
+
+  const handleEdit = () => {
+    setEdit(false);
+
+    if (editMess) {
+      updateDoc(doc(db, "posts", post.id), { message: editMess });
+    }
+  };
+
+  console.log("----------------edit--------------------");
+  console.log(edit);
+  console.log("------------------------------------");
+
+  console.log("---------------editMess---------------------");
+  console.log(editMess);
+  console.log("------------------------------------");
 
   return (
     <div className="post">
@@ -41,10 +59,10 @@ const Post = ({ post, user }) => {
         <>
           <textarea
             autoFocus
-            value={editMess ? editMess : post.message}
+            defaultValue={editMess ? editMess : post.message}
             onChange={(e) => setEditMess(e.target.value)}
           ></textarea>
-          <button classname="edit-btn" onClick={() => setEdit(false)}>
+          <button className="edit-btn" onClick={() => handleEdit()}>
             Modifier message
           </button>
         </>
@@ -55,4 +73,5 @@ const Post = ({ post, user }) => {
     </div>
   );
 };
+
 export default Post;

@@ -12,7 +12,9 @@ const Login = () => {
 
     try {
       const user = await signInWithEmailAndPassword(auth, loginEmail.current.value, loginPassword.current.value);
+      console.log(user);
     } catch (error) {
+      console.log(error.message);
       setError(true);
     }
   };

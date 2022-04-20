@@ -14,13 +14,13 @@ const App = () => {
     setUser(currentUser);
   });
 
-  const handleLogout = async () => {
-    await signOut(auth);
-  };
-
   useEffect(() => {
     getDocs(collection(db, "posts")).then((res) => setPosts(res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))));
   }, []);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
 
   return (
     <div>
