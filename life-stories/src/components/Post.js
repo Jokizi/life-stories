@@ -28,14 +28,6 @@ const Post = ({ post, user }) => {
     }
   };
 
-  console.log("----------------edit--------------------");
-  console.log(edit);
-  console.log("------------------------------------");
-
-  console.log("---------------editMess---------------------");
-  console.log(editMess);
-  console.log("------------------------------------");
-
   return (
     <div className="post">
       <div className="post-header">
