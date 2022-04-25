@@ -2,12 +2,14 @@ import React, { useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../utils/firebase.config";
-
+import { useDispatch } from "react-redux";
+import { addComment } from "../feature/post.slice";
 import CommentCard from "./CommentCard";
 
 const CommentPost = ({ post }) => {
   const [user, setUser] = useState(null);
   const answerContent = useRef();
+  const dispatch = useDispatch();
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -18,7 +20,7 @@ const CommentPost = ({ post }) => {
 
     let data = [];
 
-    if (post.comment === null) {
+    if (post.comments === null) {
       data = [
         {
           commentAuthor: user.displayName,
@@ -35,8 +37,10 @@ const CommentPost = ({ post }) => {
       ];
     }
 
-    updateDoc(doc(db, "posts", post.id), { comments: data });
-    answerContent.current.value = "";
+    updateDoc(doc(db, "posts", post.id), { comments: data }).then(() => {
+      dispatch(addComment([post.id, data]));
+      answerContent.current.value = "";
+    });
   };
 
   return (

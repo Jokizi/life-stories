@@ -26,7 +26,7 @@ const App = () => {
   const handleLogout = async () => {
     await signOut(auth);
   };
-
+  console.log(posts);
   return (
     <div>
       <div className="app-header">
